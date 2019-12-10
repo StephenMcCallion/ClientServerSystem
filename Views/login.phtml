@@ -1,0 +1,30 @@
+<?php require('template/header.phtml') ?>
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card card-body bg-light mt-5">
+                <form action="<?php $_SERVER['PHP_SELF']; ?>" class="form-signin" name="login" method="post">
+                    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+                    <div class="form-group">
+                        <label for="inputEmail" class="sr-only">Email address</label>
+                        <input type="email" id="inputEmail" class="form-control" name="email" placeholder="Email address" required autofocus>
+                    </div>
+                    <div class="form-group">
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
+                    </div>
+                        <div class="checkbox mb-3">
+                        <label>
+                            <input type="checkbox" value="remember-me"> Remember me
+                        </label>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block" name="submit" type="submit">Sign in</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<!--    <form action="--><?php //$_SERVER['PHP_SELF']; ?><!--" name="login" method="post">-->
+<!--        <input type="email" name="email" placeholder="Email" required>-->
+<!--        <input type="password" name="" placeholder="Password" required>-->
+<!--        <input type="submit" name="submit">-->
+<?php require('template/footer.phtml') ?>
