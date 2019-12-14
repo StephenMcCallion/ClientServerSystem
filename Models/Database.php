@@ -14,6 +14,7 @@ class Database
      */
     public function __construct($username, $password, $host, $database)
     {
+        //Create PDO instance
         try {
             $this->_dbHandle = new PDO("mysql:host=$host;dbname=$database", $username, $password);
         }
@@ -43,4 +44,5 @@ class Database
     {
         $this->_dbHandle = null;
     }
+
 }

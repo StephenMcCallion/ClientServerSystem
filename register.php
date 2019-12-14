@@ -1,24 +1,42 @@
 <?php
 
-require_once ('Models/UserDataSet.php');
+require_once('Models/User.php');
 $view = new stdClass();
 $view->pageTitle = 'Register';
 
-if(isset($_POST['submit'])) {
+// Define variables and set to empty values
+$fName = $lName = $email = $password = "";
 
-    //
-    $fName = htmlentities($_POST['firstName']);
-    $lName = htmlentities($_POST['lastName']);
-    $email = htmlentities($_POST['email']);
-    $password = htmlentities($_POST['password']);
-    $date = (date("Y-m-d"));
 
-    //Hash the password
-    $passwordHash = password_hash($password, PASSWORD_BCRYPT, array("cost" => 12));
+if(($_SERVER["REQUEST_METHOD"] == "POST")) {
+
+    $fName = sanitise($_POST['firstName']);
+    $lName = sanitise($_POST['lastName']);
+    $email = sanitise($_POST['email']);
+    $password = sanitise($_POST['password']);
+
 
     // Creates new user data objects via the model passes variable via parameters
-    $userDataSet = new UserDataSet();
-    $userDataSet->registerUser($fName, $lName, $email, $passwordHash, $date);
+    $userDataSet = new User();
+    $userDataSet->registerUser($fName, $lName, $email, $password);
 }
+
+// Sanitise input
+function sanitise($data){
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
+// Validate First Name
+
+// Validate Last Name
+
+// Validate Email
+
+// Check Email
+
+// Validate Password
 
 require_once('Views/register.phtml');

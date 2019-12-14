@@ -1,0 +1,44 @@
+<?php require('template/header.phtml') ?>
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Posts</h1>
+        </div>
+        <div class="col-md-6">
+            <a href="" class="btn btn-primary pull-right">
+                <i class="fa fa-pencil"></i>Add Post
+            </a>
+        </div>
+    </div>
+
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+            <?php foreach ($view->postsDataset as $data) : ?>
+
+                <div class="row">
+                    <div class="col-md-10 mx-auto">
+                        <div class="card card-body bg-light mt-5">
+                            <h1 class="card-title"><?php echo $data->getPostSubject();?></h1>
+                            <p><?php echo $data->getPostId();?></p>
+                            <?php echo "This is " . $data->getPostText();?>
+                            <?php echo "This is " . $data->getUserId();?>
+                            <?php echo "This is " . $data->getPostDate();?>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+    </form>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+
+<?php require('template/footer.phtml') ?>

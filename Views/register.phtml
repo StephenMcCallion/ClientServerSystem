@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-6 mx-auto">
             <div class="card card-body bg-light mt-5">
-                <form action="<?php $_SERVER['PHP_SELF']; ?>" name="register" method="post">
+                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" name="register" method="post">
                     <h1 class="h3 mb-3 font-weight-normal">Register</h1>
                     <p>Please fill out the details below to register and account.</p>
                     <div class="form-group">
@@ -33,10 +33,10 @@
 
                     <div class="row">
                         <div class="col">
-                            <input type="submit" value="Register" class="btn btn-success btn-block">
+                            <input type="submit" name="register" value="Register" class="btn btn-success btn-block">
                         </div>
                         <div class="col">
-                            <a href="/login.php" class="btn btn-light btn-block">Have an account?</a>
+                            <a href="/login.php" class="btn btn-light btn-block">Log in</a>
                         </div>
                     </div>
                 </form>
