@@ -1,26 +1,43 @@
 <?php require('template/header.phtml') ?>
+<div class="container" id="postspage">
     <div class="row">
         <div class="col-md-6">
             <h1>Posts</h1>
         </div>
-        <div class="col-md-6">
-            <a href="" class="btn btn-primary pull-right">
-                <i class="fa fa-pencil"></i>Add Post
-            </a>
+        <div class="col-md-8">
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" name="searchPosts" type="text" placeholder="Search Posts" aria-label="Search">
+                <button class="btn btn-secondary my-2 my-sm-0" name="SubmitSearchPosts"type="submit">Search</button>
+            </form>
         </div>
     </div>
 
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+        <div class="form-group">
+            <input class="form-control" type="text" name="subject" placeholder="Subject" required>
+            <label for="exampleFormControlTextarea1">Say what you think?</label>
+            <textarea class="form-control" name="textArea" id="exampleFormControlTextarea1" rows="3" required></textarea>
+            <button type="button" name="SubmitAddPost" class="btn btn-primary">Add Post</button>
+        </div>
+    </form>
+
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
             <?php foreach ($view->postsDataset as $data) : ?>
 
-                <div class="row">
+                <div class="row" id="posts">
                     <div class="col-md-10 mx-auto">
                         <div class="card card-body bg-light mt-5">
                             <h1 class="card-title"><?php echo $data->getPostSubject();?></h1>
-                            <p><?php echo $data->getPostId();?></p>
-                            <?php echo "This is " . $data->getPostText();?>
-                            <?php echo "This is " . $data->getUserId();?>
-                            <?php echo "This is " . $data->getPostDate();?>
+                            <!-- Shows images of posts if user logged in otherwise advises user to login to view more details -->
+                            <?php if ($_SESSION['email']){
+                             echo '<p>Posted by: <?php echo "UserData-" . $data->getUserId();?> <?php echo $data->getPostImage()?></p>';
+                            }
+                            else{
+                                echo '<p>Posted by: Login to view users details';
+                            }
+                            ?>
+                            <p><?php echo $data->getPostText();?></p>
+                            <p>Posted on: <?php echo $data->getPostDate();?> </p>
                         </div>
                     </div>
                 </div>
@@ -40,5 +57,7 @@
             </li>
         </ul>
     </nav>
+
+</div>
 
 <?php require('template/footer.phtml') ?>

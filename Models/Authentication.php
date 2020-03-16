@@ -1,20 +1,21 @@
 <?php
 
+require_once ('Models/Database.php');
+require_once 'Models/User.php';
 
 class Authentication
 {
-
-
     /*
- * User Session methods
+ * UserData Session methods
  */
     //Checks user is logged in
     public function isLoggedIn(){
-        if (isset($_SESSION['user_id'])){
+
+        if (isset($_SESSION['email'])){
             return true;
         }
         else{
-            return false;
+            header('Location: login.php');
         }
     }
 }

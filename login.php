@@ -23,32 +23,41 @@ right message to the user.
 
  */
 
-require_once 'Models/User.php';
+require_once 'Models/UserData.php';
+require_once 'Models/Authentication.php';
 
 $view = new stdClass();
 $view->pageTitle = 'Login';
 
+//Login UserData
 session_start();
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    //Array of error messages for validation
+//    $error =[
+//        'emailError' => '',
+//        'passwordError' => '',
+//    ];
+    $email = sanitise($_POST['email']);
+    $password = sanitise($_POST['password']);
 
-//Validate email
+    $userData = new UserData();
+    //Validate email
+//    if (empty($email)){
+//        $error['emailError'] = "Please enter an email";
+//    }
 
-//Validate password
+    //Validate password
+//    if (empty($password)){
+//        $error['passwordError'] = "Please enter a password";
+//    }
 
-if(isset($_POST['login_submit'])) {
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST"){
-//        $user = new User();
-//        if ($user->checkUserExists(true)){
-//            return error_log("incorrect email or password");
-//        }
-//        else{
-            $user->loginUser($email, $password);
-            header('location' . URL );
-//        }
+    if ($userData->loginUser($email, $password) == true){
+        $_SESSION['email'] = $email;
+        header("Location: profile.php");
     }
-
-    // Create Session With User Info
-
+    else{
+        header("Location: index.php");
+    }
 }
 
 require_once('Views/login.phtml');

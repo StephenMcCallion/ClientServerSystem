@@ -17,6 +17,7 @@ class Database
         //Create PDO instance
         try {
             $this->_dbHandle = new PDO("mysql:host=$host;dbname=$database", $username, $password);
+            $this->_dbHandle->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         catch (PDOException $e) {
             echo $e->getMessage();

@@ -1,9 +1,17 @@
 <?php require('template/header.phtml') ?>
+                <div class="card" style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $_SESSION['name'] ?></h5>
+                        <p class="card-text">EMAIL: <?php echo $_SESSION['email'] ?></p></p>
+                        <a href="#" class="btn btn-primary">Upload profile picture</a>
+                    </div>
+                </div>
+
     <div class="row">
         <div class="col-md-10 mx-auto">
             <div class="card card-body bg-light mt-5">
-                <img src="/media/images/GiapWeng.png" alt="">
-                <p>This is the profile</p>
+                <h1>My Posts</h1>
             </div>
         </div>
     </div>
