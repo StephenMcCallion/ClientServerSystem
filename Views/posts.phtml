@@ -1,26 +1,31 @@
 <?php require('template/header.phtml') ?>
 <div class="container" id="postspage">
     <div class="row">
+
+<!--Search for a post-->
         <div class="col-md-6">
             <h1>Posts</h1>
         </div>
         <div class="col-md-8">
-            <form class="form-inline my-2 my-lg-0">
+            <form action="" class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" name="searchPosts" type="text" placeholder="Search Posts" aria-label="Search">
-                <button class="btn btn-secondary my-2 my-sm-0" name="SubmitSearchPosts"type="submit">Search</button>
+                <button type="submit" class="btn btn-secondary my-2 my-sm-0" name="SubmitSearchPosts"type="submit">Search</button>
             </form>
         </div>
     </div>
 
-    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+<!--Add a post to the forum-->
+    <form action="/addPost.php" method="post">
         <div class="form-group">
             <input class="form-control" type="text" name="subject" placeholder="Subject" required>
             <label for="exampleFormControlTextarea1">Say what you think?</label>
             <textarea class="form-control" name="textArea" id="exampleFormControlTextarea1" rows="3" required></textarea>
-            <button type="button" name="SubmitAddPost" class="btn btn-primary">Add Post</button>
+            <button type="submit" name="SubmitAddPost" class="btn btn-primary">Add Post</button>
         </div>
     </form>
 
+
+<!--zView all posts-->
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
             <?php foreach ($view->postsDataset as $data) : ?>
 
@@ -43,21 +48,6 @@
                 </div>
             <?php endforeach; ?>
     </form>
-
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
-
 </div>
 
 <?php require('template/footer.phtml') ?>

@@ -27,7 +27,6 @@ class UserData
         //Hash password
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-        echo $passwordHash;
         //Assigns signup date
         $date = (date("Y-m-d"));
         //Binds the parameters

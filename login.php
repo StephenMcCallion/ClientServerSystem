@@ -23,7 +23,6 @@ right message to the user.
 
  */
 
-require_once 'Models/UserData.php';
 require_once 'Models/Authentication.php';
 
 $view = new stdClass();
@@ -31,32 +30,21 @@ $view->pageTitle = 'Login';
 
 //Login UserData
 session_start();
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    //Array of error messages for validation
-//    $error =[
-//        'emailError' => '',
-//        'passwordError' => '',
-//    ];
-    $email = sanitise($_POST['email']);
-    $password = sanitise($_POST['password']);
 
-    $userData = new UserData();
-    //Validate email
-//    if (empty($email)){
-//        $error['emailError'] = "Please enter an email";
-//    }
+if (isset($_POST['email'])) {
+    $email = htmlentities($_POST['email']);
+    $password = htmlentities($_POST['password']);
 
-    //Validate password
-//    if (empty($password)){
-//        $error['passwordError'] = "Please enter a password";
-//    }
+    $login = new Authentication();
 
-    if ($userData->loginUser($email, $password) == true){
-        $_SESSION['email'] = $email;
+    $user = $login->login($email, $password);
+    var_dump($user);
+    if ($user != null) {
+        $_SESSION['loggedIn'] = true;
+        $_SESSION['email'] = $user->getEmail();
+        $_SESSION['name'] = $user->getFName();
+        $_SESSION['userID'] = $user->getUserId();
         header("Location: profile.php");
-    }
-    else{
-        header("Location: index.php");
     }
 }
 
