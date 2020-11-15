@@ -1,18 +1,143 @@
 <?php require('template/header.phtml') ?>
-                <div class="card" style="width: 18rem;">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo $_SESSION['name'] ?></h5>
-                        <p class="card-text">EMAIL: <?php echo $_SESSION['email'] ?></p></p>
-                        <a href="#" class="btn btn-primary">Upload profile picture</a>
+
+<!--view profile image name and email address-->
+    <div class="card" id="profileCard" style="width: 18rem;">
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+            <?php foreach ($view->userData as $data) : ?>
+                <h1 class="card-title" id="profileUserName"><?php echo $data->getUserName() ?></h1>
+                <?php echo '<img src="/media/images/userImages/' . $data->getProfilePic() . '"class="card-img-top" alt="Profile Picture" id="profilePic">'?>
+                <div class="card-body">
+                </div>
+            <?php endforeach; ?>
+    </div>
+
+
+<!--views all of the users posts-->
+    <div class="card card-body bg-light mt-5">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-about-tab" data-toggle="pill" href="#pills-about" role="tab" aria-controls="pills-about" aria-selected="true">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-posts-tab" data-toggle="pill" href="#pills-posts" role="tab" aria-controls="pills-posts" aria-selected="false">Posts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-friends-tab" data-toggle="pill" href="#pills-friends" role="tab" aria-controls="pills-friends" aria-selected="false">Friends</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-watchList-tab" data-toggle="pill" href="#pills-watchList" role="tab" aria-controls="pills-watchList" aria-selected="false">Watchlist</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-about" role="tabpanel" aria-labelledby="pills-about-tab">
+                <h5 class="card-title">Name: <?php echo $data->getFName() . ' ' . $data->getLName();?> </h5>
+                <p class="card-text">Email: <?php echo $data->getEmail() ?></p>
+            </div>
+            <div class="tab-pane fade" id="pills-posts" role="tabpanel" aria-labelledby="pills-posts-tab">
+                <div class="row" id="posts">
+                    <div class="col-md-10 mx-auto">
+                        <?php foreach ($view->postData as $postD) : ?>
+                        <div class="card card-body mt-5 i" id="postCards" style="border-radius: 15px;">
+                            <h6><i><?php echo $postD->getPostDate() ?></i></h6>
+                            <hr>
+                            <?php if ($postD->getPostImage() != null)
+                                echo '<img src="/media/images/postImages/' . $postD->getPostImage() . '"class="img-fluid" alt="Responsive image" id="postImage">'; ?>
+                            <h1 class="card-title"><?php echo $postD->getPostSubject();?></h1>
+                            <hr>
+                            <p><?php echo $postD->getPostText()?></p>
+                        </div>
+                            <?php endforeach; ?>
                     </div>
                 </div>
+            </form>
+            </div>
+            <div class="tab-pane fade" id="pills-friends" role="tabpanel" aria-labelledby="pills-friends-tab">
+                <div>
+                    <?php foreach ($view->myFriends as $friend) : ?>
+                        <ul class="list-group">
+                            <li class="list-group-item" style="background-color: rgb(53, 58, 63); color: white; font-size: 20px;">
+                                <?php echo '<img src="/media/images/userImages/' . $friend->getProfilePic() . '"class="img-fluid" alt="Responsive image" id="userProfilePicPosts">'; ?>
+                                <?php echo $friend->getUserName() ?>
+                                <a href="/userProfile.php?thisUser=<?php $_SESSION['myFriend'] = $friend->getUserId(); echo $friend->getUserId()?>"><button>View profile</button></a>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#messageModal" onclick="readMessage()">
+                                    Meessage
+                                </button>
+                            </li>
+                        </ul>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-watchList" role="tabpanel" aria-labelledby="pills-watchList-tab">
 
-    <div class="row">
-        <div class="col-md-10 mx-auto">
-            <div class="card card-body bg-light mt-5">
-                <h1>My Posts</h1>
             </div>
         </div>
     </div>
+
+    <div>
+        <!-- Modal -->
+        <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Message</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="messageChat">
+                    </div>
+                    <form action="/sendMessage.php" id="sendMessageForm">
+                        <div class="input-group" id="sendMessageInput">
+                            <input type="text" class="form-control" id="messageText" placeholder="Type your message here.." aria-label="Recipient's username with two button addons" aria-describedby="button-addon4">
+                            <div class="input-group-append" id="button-addon4">
+                                <button class="btn btn-outline-secondary" type="button" id="attachImg"></button>
+                                <button class="btn btn-outline-secondary" type="button" onclick="sendMessage()">Send</button>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+
+<?php $token = substr(str_shuffle(MD5(microtime())), 0, 20);
+$_SESSION["ajaxToken"] = $token;?>
+
+
+    <script>
+        function readMessage() {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var uic = document.getElementById("messageChat");
+                    uic.innerHTML = "";
+                    var json = JSON.parse(this.responseText);
+                    console.log(json);
+                    json.MyMessages.forEach(function (obj) {
+                        //add most recent message
+
+                        //If object = session user ID then this is my chat
+                        uic.innerHTML += '<div class="card bg-light mb-3" style="max-width: 18rem;"><div class="card-header" id="theirHeader">' + obj.myMessageDate + '</div> <div class="card-body"> <p class="card-text" id="theirMessage">' + obj.myMessage + '</p></div></div></div><br/>';
+                        //Else then this is the person who i am talking to chat
+                    });
+                }};
+            xmlhttp.open("GET", "/readMessage.php?token=<?php echo $token; ?>", true);
+            xmlhttp.send();
+        };
+        setInterval(readMessage, 3000);
+    </script>
+
+    <script>
+        function sendMessage() {
+            var sendMessageText = document.getElementById("messageText").value;
+            const xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("POST", "/sendMessage.php?message=" + sendMessageText, true);
+            xmlhttp.send();
+            readMessage();
+            document.getElementById("messageText").value = "";
+        }
+    </script>
+
 <?php require('template/footer.phtml') ?>

@@ -2,7 +2,7 @@
 
 class Posts
 {
-    protected $post_id, $user_id, $post_subject, $post_text, $post_image, $likes, $views, $post_date;
+    protected $post_id, $user_id, $post_subject, $post_text, $post_image, $post_date;
 
     /**
      * Posts constructor.
@@ -22,8 +22,6 @@ class Posts
         $this->post_subject = $dbRow['post_subject'];
         $this->post_text = $dbRow['post_text'];
         $this->post_image = $dbRow['post_image'];
-        $this->likes = $dbRow['likes'];
-        $this->views = $dbRow['views'];
         $this->post_date = $dbRow['post_date'];
     }
 
@@ -65,22 +63,6 @@ class Posts
     public function getPostImage()
     {
         return $this->post_image;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLikes()
-    {
-        return $this->likes;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getViews()
-    {
-        return $this->views;
     }
 
     /**

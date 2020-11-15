@@ -10,7 +10,7 @@ if (isset($_POST['firstName'])) {
     $userData = new UserData();
 
     $fName = htmlentities($_POST['firstName']);
-    $lName = htmlentities($_POST['lastName']);
+    $lName = htmlentities($_POST['surname']);
     $email = htmlentities($_POST['email']);;
     $confEmail = htmlentities($_POST['confEmail']);;
     $password = htmlentities($_POST['password']);;

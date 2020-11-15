@@ -1,0 +1,39 @@
+<?php require('template/header.phtml') ?>
+
+    <!--view profile image name and email address-->
+    <div class="card" id="profileCard" style="width: 18rem;">
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+            <?php foreach ($view->userData as $data) : ?>
+                <?php echo '<img src="/media/images/userImages/' . $data->getProfilePic() . '"class="card-img-top" alt="Profile Picture" id="profilePic">'?>
+                <div class="card-body">
+                    <h5 class="card-title"><?php echo $data->getFName() . ' ' . $data->getLName();?> </h5>
+                    <p class="card-text">EMAIL: <?php echo $data->getEmail() ?></p>
+                    <button type="submit" name="addFriend" class="btn btn-secondary">Add Friend</button>
+                </div>
+            <?php endforeach; ?>
+        </form>
+    </div>
+
+    <!--views all of the users posts-->
+    <div class="card card-body bg-light mt-5">
+        <h1>My Posts</h1>
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+            <?php foreach ($view->postData as $data) : ?>
+                <div class="row" id="posts">
+                    <div class="col-md-10 mx-auto">
+                        <div class="card card-body mt-5 i" id="postCards" style="border-radius: 15px;">
+                            <h2><a href="/userProfile.php?thisUser=<?php echo $data->getUserID()?>" id="viewPostUserName"> <?php echo '<img src="/media/images/userImages/' . $userData->getProfilePic() . '"class="img-fluid" alt="Responsive image" id="userProfilePicPosts">' . " " . $userData->getUserName(); ?> </a> </h2>
+                            <h6><i><?php echo $data->getPostDate() ?></i></h6>
+                            <hr>
+                            <?php if ($data->getPostImage() != null) echo '<img src="/media/images/postImages/' . $data->getPostImage() . '"class="img-fluid" alt="Responsive image" id="postImage">'; ?>
+                            <h1 class="card-title"><a href="" id="viewPostHeading"><?php echo $data->getPostSubject();?></a></h1>
+                            <hr>
+                            <p><?php echo $data->getPostText()?></p>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </form>
+    </div>
+
+<?php require('template/footer.phtml') ?>

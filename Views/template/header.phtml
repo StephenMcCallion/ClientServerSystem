@@ -16,12 +16,14 @@
     <link href="/css/bootstrap-css/bootstrap-reboot.css" rel="stylesheet">
     <!-- My Stylesheet -->
     <link href="/css/my-stylesheet.css" rel="stylesheet">
+    <!-- Main font -->
+    <link href="https://fonts.googleapis.com/css2?family=Concert+One&display=swap" rel="stylesheet">
 
-    <title>Server-Side Programming - <?php echo $view->pageTitle; ?></title>
+    <title>Live Music Forum - <?php echo $view->pageTitle; ?></title>
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3 nav-fill">
     <div class="container">
     <a class="navbar-brand" href="#">Live Music Forum</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,20 +33,17 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/index.php">Home</a>
+                <a class="nav-link" id="navLinks" href="/index.php">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/about.php">About</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/posts.php">Posts</a>
+                <a class="nav-link" id="navLinks" href="/posts.php">Posts</a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
             <?php
             if ($_SESSION['email']){
                 echo '<li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' . $_SESSION['name'] . '</a>
+                <a class="nav-link dropdown-toggle" href="http://example.com" id="userNavDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' . $_SESSION['name'] . '</a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
                 <a class="dropdown-item" href="/profile.php">Profile</a>
                 <a class="dropdown-item" href="#">Account Settings</a>

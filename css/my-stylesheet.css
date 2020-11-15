@@ -1,10 +1,122 @@
 body {
-    background-color: #656881;
-}
-#postspage.container{
-    background-color: #ffffff;
+    background-color: rgb(53, 58, 63);
+    border-radius: 15px;
+    font-family: 'Concert One', cursive;
 }
 
-#posts{
+/*
+Styling for Nav
+ */
+userNavDropDown:hover {
+    color: rgb(220, 143, 52);
+}
 
+navLinks li:hover {
+    color: rgb(220, 143, 52);
+}
+
+#addImagePostBtn {
+    background-color: #4e555b;
+    font-size: 10px;
+}
+
+ul nav :hover {
+
+}
+
+/*
+This styling is for profile page
+ */
+
+#profileCard {
+    align-content: center;
+}
+
+#attachImg {
+    background-image: url("/media/icons/addImage.png");
+    background-position:center;
+    background-repeat:no-repeat;
+}
+
+#sendMessageInput {
+    padding: 15px;
+}
+
+/*
+This styling if for the posts section
+ */
+#userProfilePicPosts {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+#postSubjectInput {
+    background-color: rgb(71, 65, 65);
+    color: white;
+    font-size: 20px;
+}
+
+#postTextAreaInput {
+    background-color: rgb(71, 65, 65);
+    color: white;
+    font-size: 20px;
+}
+
+#postspage{
+    background-color: rgb(248, 249, 250);
+    padding: 20px;
+}
+
+#postCards {
+    background-color: rgb(53, 58, 63);
+    color: White;
+}
+
+#postImage {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#viewPostUserName {
+    text-decoration: none;
+    color: inherit;
+}
+
+#viewPostHeading {
+    text-decoration: none;
+    color: inherit;
+}
+
+#viewPostHeading:hover {
+    color: rgb(220, 143, 52);
+}
+
+#viewPostUserName:hover {
+    color: rgb(220, 143, 52);
+}
+
+/*
+LiveSearch Styling
+ */
+
+.LiveSearch a:hover {
+    text-decoration: none;
+    color: rgb(220, 143, 52);
+}
+
+.LiveSearch a img{
+    width: 50px;
+    height: 50px;
+    padding: 0px;
+    border-radius: 50%;
+    margin-right: 30px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    margin-top: 0;
+}
+
+.LiveSearch p {
+    font-size: 28px;
 }

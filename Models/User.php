@@ -3,7 +3,7 @@
 
 class User
 {
-    protected $userId, $fName, $lName, $email;
+    protected $userId, $fName, $lName, $email, $profilePic, $userName;
 
     /**
      * User constructor.
@@ -18,6 +18,8 @@ class User
         $this->fName = $dbRow['first_name'];
         $this->lName = $dbRow['last_name'];
         $this->email = $dbRow['email'];
+        $this->profilePic = $dbRow['profile_pic'];
+        $this->userName = $dbRow['userName'];
     }
 
     /**
@@ -58,6 +60,14 @@ class User
     public function getProfilePic()
     {
         return $this->profilePic;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserName()
+    {
+        return $this->userName;
     }
 
 }

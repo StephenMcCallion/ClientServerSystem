@@ -1,53 +1,67 @@
 <?php require('template/header.phtml') ?>
-<div class="container" id="postspage">
-    <div class="row">
+    <div class="container" id="postspage">
 
-<!--Search for a post-->
-        <div class="col-md-6">
-            <h1>Posts</h1>
+<!--        new search bar-->
+        <form action="/posts.php" class="" method="post">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter Search</button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#" name="postSearch">Posts</a>
+                    <a class="dropdown-item" href="#" name="userSearch">Users</a>
+                    <a class="dropdown-item" href="#" name="categorySearch">Categories</a>
+                </div>
+            </div>
+            <input type="text" class="form-control" id="searchPosts" aria-label="Text input with dropdown button" placeholder="Search" onkeyup="showPostSuggestion(this.value)">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" id="submitSearchPosts" type="submit">Search</button>
+            </div>
         </div>
-        <div class="col-md-8">
-            <form action="" class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" name="searchPosts" type="text" placeholder="Search Posts" aria-label="Search">
-                <button type="submit" class="btn btn-secondary my-2 my-sm-0" name="SubmitSearchPosts"type="submit">Search</button>
-            </form>
-        </div>
+            <ul class="list-group" id="textHint"></ul>
+        </form>
+
+        <!--Add a post to the forum-->
+        <div class="card card-body mt-5 i" id="postCards" style="border-radius: 15px;">
+        <?php if ($_SESSION['userID']): ?>
+        <form action="/addPost.php" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <input class="form-control" type="text" name="subject" id="postSubjectInput" placeholder="Subject" required>
+                <label for="exampleFormControlTextarea1">Say what you think?</label>
+                <textarea class="form-control" name="textArea" id="postTextAreaInput" rows="3" required></textarea>
+                <button type="submit" name="SubmitAddPost" style="background-color: rgb(220, 143, 52); border: none" class="btn btn-primary" id="submitPostBtn">Post</button>
+                <input type="file" name="addImg">
+        </form>
     </div>
-
-<!--Add a post to the forum-->
-    <form action="/addPost.php" method="post">
-        <div class="form-group">
-            <input class="form-control" type="text" name="subject" placeholder="Subject" required>
-            <label for="exampleFormControlTextarea1">Say what you think?</label>
-            <textarea class="form-control" name="textArea" id="exampleFormControlTextarea1" rows="3" required></textarea>
-            <button type="submit" name="SubmitAddPost" class="btn btn-primary">Add Post</button>
-        </div>
     </form>
+    </div>
+<?php else:?>
+    <p><a href="/login.php">Login</a> to post content </p>
+<?php endif; ?>
 
-
-<!--zView all posts-->
+    <!--zView all posts-->
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-            <?php foreach ($view->postsDataset as $data) : ?>
-
-                <div class="row" id="posts">
-                    <div class="col-md-10 mx-auto">
-                        <div class="card card-body bg-light mt-5">
-                            <h1 class="card-title"><?php echo $data->getPostSubject();?></h1>
-                            <!-- Shows images of posts if user logged in otherwise advises user to login to view more details -->
-                            <?php if ($_SESSION['email']){
-                             echo '<p>Posted by: <?php echo "UserData-" . $data->getUserId();?> <?php echo $data->getPostImage()?></p>';
-                            }
-                            else{
-                                echo '<p>Posted by: Login to view users details';
-                            }
-                            ?>
-                            <p><?php echo $data->getPostText();?></p>
-                            <p>Posted on: <?php echo $data->getPostDate();?> </p>
-                        </div>
+        <?php foreach ($view->postsWithUsersDataset as $data) : ?>
+            <?php foreach ($view->users->fetchUser($data->getUserId()) as $userData) : ?>
+            <div class="row" id="posts">
+                <div class="col-md-10 mx-auto">
+                    <div class="card card-body mt-5 i" id="postCards" style="border-radius: 15px;">
+                        <h2><a href="/userProfile.php?thisUser=<?php echo $userData->getUserID()?>" id="viewPostUserName"> <?php echo '<img src="/media/images/userImages/' . $userData->getProfilePic() . '"class="img-fluid" alt="Responsive image" id="userProfilePicPosts">' . " " . $userData->getUserName(); ?> </a> </h2>
+                        <h6><i><?php echo $data->getPostDate() ?></i></h6>
+                        <hr>
+                        <?php if ($data->getPostImage() != null)
+                        echo '<img src="/media/images/postImages/' . $data->getPostImage() . '"class="img-fluid" alt="Responsive image" id="postImage">'; ?>
+                        <h1 class="card-title"><a href="" id="viewPostHeading"><?php echo $data->getPostSubject();?></a></h1>
+                        <hr>
+                        <p><?php echo $data->getPostText()?></p>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            </div>
+        <?php endforeach; ?>
+        <?php endforeach; ?>
     </form>
-</div>
+    </div>
+
+    <script src="/js/LiveSearch.js">
+    </script>
 
 <?php require('template/footer.phtml') ?>

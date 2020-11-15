@@ -78,9 +78,9 @@ class UserData
         }
     }
 
-    public function fetchUser($email){
-        $statement = $this->_dbHandle->prepare("SELECT * FROM users WHERE email=:email");
-        $statement->bindParam(':email', $email);
+    public function fetchUser($userID){
+        $statement = $this->_dbHandle->prepare("SELECT * FROM users WHERE user_id = :userID");
+        $statement->bindParam(':userID', $userID);
         $statement->execute();
         $this->_dbInstance->__destruct();
 

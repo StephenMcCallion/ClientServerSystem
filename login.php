@@ -28,7 +28,6 @@ require_once 'Models/Authentication.php';
 $view = new stdClass();
 $view->pageTitle = 'Login';
 
-//Login UserData
 session_start();
 
 if (isset($_POST['email'])) {
